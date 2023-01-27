@@ -27,23 +27,23 @@
     {
       "id": 1,
       "name": "Poulet gingembre",
-      "nb_part": 4,
+      "nb_part": "4",
       "description": "Poulet au gingembre sur son lit de riz.",
       "link": "htpps//www.youtube.com",
       "ingredients": [
         {
           "name": "Poulet",
-          "quantity": 1,
+          "quantity": "1",
           "unit": "kg"
         },
         {
           "name": "Gingembre",
-          "quantity": 200,
+          "quantity": "200",
           "unit": "g"
         },
         {
           "name": "Riz",
-          "quantity": 1,
+          "quantity": "1",
           "unit": "kg"
         }
       ]

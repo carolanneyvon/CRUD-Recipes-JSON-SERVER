@@ -49,7 +49,7 @@ function afficherRecette(res) {
       html += ingredient.unit + "</br>";
     }
     html += "</td>";
-    html += "<td><i class='fas fa-lg fa-pen text-warning' id=\"btnModifierRecette"+btnCount +"\" onclick=\"updateRecette('" + receipe.id + "')\"></i></td>";
+    html += "<td><i class='fas fa-lg fa-pen text-warning' id=\"btnModifierRecette" + btnCount + "\" onclick=\"updateRecette('" + receipe.id + "')\"></i></td>";
     html += "<td><i class='fas fa-lg fa-trash text-danger' onclick=\"supprimerRecette('" + receipe.id + "')\"></i></td>";
     html += "</tr>"
     btnCount++;
@@ -96,7 +96,7 @@ function ajouterIngredient() {
   quantity.placeholder = "Quantité";
 
   // Ne vérouille pas la saisie mais informe l'utilisateur qu'il doit renseigner un chiffre entre 0 et 999
-  quantity.addEventListener("input", function(event) {
+  quantity.addEventListener("input", function (event) {
     if (this.value > 999 || this.value < 0) {
       event.preventDefault();
       alert("La quantité doit être comprise entre 0 et 999");
@@ -110,7 +110,7 @@ function ajouterIngredient() {
   let option0 = document.createElement("option");
   option0.value = "";
   option0.innerHTML = "";
-  unit.appendChild(option0); 
+  unit.appendChild(option0);
 
   let option1 = document.createElement("option");
   option1.value = "mg";
@@ -229,9 +229,12 @@ function updateRecette(id) {
         document.querySelector("#quantity" + i).value = ingredients[i].quantity;
         document.querySelector("#unit" + i).value = ingredients[i].unit;
       }
-    
+
       // Afficher le bouton Enregistrer les modifications
       document.querySelector("#btnUpdate").style.display = "block";
+      // Afficher le bouton Annuler les modifications et action au clic avec cancelUpdate()
+      let cancelButton = document.querySelector("#btnCancel").style.display = "block";
+      cancelButton.onclick = cancelUpdate;
       // Faire disparaitre le bouton Ajouter la recette
       document.querySelector("#btnCreate").style.display = "none";
 
@@ -267,6 +270,40 @@ function updateRecette(id) {
         callServeur('http://localhost:3000/receipes/' + id, objet, 'PUT');
       });
     });
+}
+
+/* Annuler les modifications et revenir à l'état initial
+*/
+// TRAVAIL EN COURS prend quand meme en compte les modification faite dans les champs
+function cancelUpdate() {
+  let originalNomRecette = document.querySelector("#nomRecette").value;
+  let originalNbPart = document.querySelector("#nbPart").value;
+  let originalDescription = document.querySelector("#description").value;
+  let originalLink = document.querySelector("#link").value;
+  let originalIngredients = [];
+
+  // Stockage des ingrédients dans un tableau
+  let ingrElements = document.querySelectorAll(".ingr");
+  for (let i = 0; i < ingrElements.length; i++) {
+    originalIngredients.push({
+      "name": ingrElements[i].querySelector("#nomI" + i).value,
+      "quantity": ingrElements[i].querySelector("#quantity" + i).value,
+      "unit": ingrElements[i].querySelector("#unit" + i).value
+    });
+  }
+
+  // Réaffectation des valeurs originales aux champs de formulaire
+  document.querySelector("#nomRecette").value = originalNomRecette;
+  document.querySelector("#nbPart").value = originalNbPart;
+  document.querySelector("#description").value = originalDescription;
+  document.querySelector("#link").value = originalLink;
+
+  // Réaffectation des ingrédients
+  for (let i = 0; i < ingrElements.length; i++) {
+    ingrElements[i].querySelector("#nomI" + i).value = originalIngredients[i].name;
+    ingrElements[i].querySelector("#quantity" + i).value = originalIngredients[i].quantity;
+    ingrElements[i].querySelector("#unit" + i).value = originalIngredients[i].unit;
+  }
 }
 
 /* DELETE => Permet de supprimer une recette en fonction de son id
