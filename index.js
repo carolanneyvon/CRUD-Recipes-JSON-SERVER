@@ -90,9 +90,18 @@ function ajouterIngredient() {
   let quantity = document.createElement("input");
   quantity.type = "number";
   quantity.min = 0;
+  quantity.max = 999;
   quantity.name = "quantity";
   quantity.id = "quantity" + ingrCount;
   quantity.placeholder = "Quantité";
+
+  // Ne vérouille pas la saisie mais informe l'utilisateur qu'il doit renseigner un chiffre entre 0 et 999
+  quantity.addEventListener("input", function(event) {
+    if (this.value > 999 || this.value < 0) {
+      event.preventDefault();
+      alert("La quantité doit être comprise entre 0 et 999");
+    }
+  });
 
   let unit = document.createElement("select");
   unit.name = "unit";

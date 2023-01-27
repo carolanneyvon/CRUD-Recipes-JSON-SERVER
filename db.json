@@ -21,11 +21,6 @@
           "name": "Riz",
           "quantity": "1",
           "unit": ""
-        },
-        {
-          "name": "test",
-          "quantity": "200",
-          "unit": "grammes"
         }
       ]
     },
@@ -50,44 +45,6 @@
           "name": "Riz",
           "quantity": 1,
           "unit": "kg"
-        }
-      ]
-    },
-    {
-      "id": "c4584ef5-6030-408e-bcaf-6d353f6c5c4a",
-      "name": "tt",
-      "nb_part": "2",
-      "description": "gre",
-      "link": "gre",
-      "ingredients": [
-        {
-          "name": "gg",
-          "quantity": "1.5",
-          "unit": "sachet"
-        },
-        {
-          "name": "rr",
-          "quantity": "5",
-          "unit": ""
-        }
-      ]
-    },
-    {
-      "id": "49824c31-b682-4de4-94c3-ae3205479a47",
-      "name": "ss",
-      "nb_part": "2",
-      "description": "ss",
-      "link": "ss",
-      "ingredients": [
-        {
-          "name": "sss",
-          "quantity": "-1",
-          "unit": ""
-        },
-        {
-          "name": "sss",
-          "quantity": "100",
-          "unit": ""
         }
       ]
     }
