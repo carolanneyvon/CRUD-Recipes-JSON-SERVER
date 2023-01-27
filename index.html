@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+  <title>TP CRUD Receipes</title>
+</head>
+<body>
+  <div class="container-fluid">
+    <h1>Recettes de cuisine</h1>
+    
+    <!-- TABLEAU HTML SE GENERE ICI -->
+    <div id="affichage">
+    </div>
+
+    <!-- FORMULAIRE -->
+<!--     <form class="mt-2" action="http://localhost:3000/receipes" method="post">
+        <div class="row mt-2">
+            <div class="col-2 my-auto">
+                Nom de la recette
+            </div>
+            <div class="col-3 my-auto">
+                <input type="text" class="form-control" id="nomRecette">         
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-2 my-auto">
+                Nombre de part
+            </div>
+            <div class="col-3 my-auto">
+                <input class="form-control" type="text" id="nbPart">
+            </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-2 my-auto">
+              Description
+          </div>
+          <div class="col-3 my-auto">
+              <input class="form-control" type="text" id="description">
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-2 my-auto">
+              Lien
+          </div>
+          <div class="col-3 my-auto">
+              <input class="form-control" type="text" id="link">
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-2 my-auto">
+            Ingredients
+          </div>
+          <div class="col-3 my-auto">
+            <input class="form-control" type="text" id="nomI">
+          </div>
+          <div class="col-3 my-auto">
+            <input class="form-control" type="text" id="quantity">
+          </div>
+        </div>
+        
+        <div class="row mt-2">
+          <div class="col-2 my-auto">
+            Unité
+          </div>
+          <div class="form-check form-check-inline col-1 my-auto">
+            <input class="form-check-input" type="radio" name="unit" id="inlineRadio1" value="cl">
+            <label class="form-check-label" for="inlineRadio1">cl</label>
+          </div>
+          <div class="form-check form-check-inline col-1 my-auto">
+            <input class="form-check-input" type="radio" name="unit" id="inlineRadio2" value="ml">
+            <label class="form-check-label" for="inlineRadio2">ml</label>
+          </div>
+          <div class="form-check form-check-inline col-1 my-auto">
+            <input class="form-check-input" type="radio" name="unit" id="inlineRadio3" value="l">
+            <label class="form-check-label" for="inlineRadio3">l</label>
+          </div>
+          <div class="form-check form-check-inline col-1 my-auto">
+            <input class="form-check-input" type="radio" name="unit" id="inlineRadio4" value="g">
+            <label class="form-check-label" for="inlineRadio4">g</label>
+          </div>
+          <div class="form-check form-check-inline col-1 my-auto">
+            <input class="form-check-input" type="radio" name="unit" id="inlineRadio5" value="mg">
+            <label class="form-check-label" for="inlineRadio5">mg</label>
+          </div>
+          <div class="form-check form-check-inline col-1 my-auto">
+            <input class="form-check-input" type="radio" name="unit" id="inlineRadio6" value="kg">
+            <label class="form-check-label" for="inlineRadio6">kg</label>
+          </div>
+        </div>
+   
+        <div class="row mt-2">
+            <div class="col-4 text-center">
+                <input class="button" type="button" value="Ajouter la recette" onclick="ajouterRecette()">
+            </div>
+        </div>
+    </form> -->
+
+    <form class="mt-2" action="http://localhost:3000/receipes" method="post">
+      <!-- <div class="row mt-2">
+      <label for="nomRecette">Nom de la recette :</label>
+      <input class="col-3 my-auto" type="text" id="nomRecette" name="nomRecette">
+      </div> -->
+      <div class="row mt-2">
+        <div class="col-2 my-auto">
+            Nom de la recette
+        </div>
+        <div class="col-3 my-auto">
+            <input type="text" class="form-control" id="nomRecette">         
+        </div>
+    </div>
+
+      <div class="row mt-2">
+      <label for="nbPart">Nombre de parts :</label>
+      <input class="col-3 my-auto" type="number" id="nbPart" name="nbPart">
+      </div>
+
+      <div class="row mt-2">
+      <label for="description">Description :</label>
+      <textarea class="col-3 my-auto" id="description" name="description"></textarea>
+      </div>
+
+      <div class="row mt-2">
+      <label for="link">Lien vers la recette :</label>
+      <input class="col-3 my-auto" type="text" id="link" name="link">
+      </div>
+
+      <div class="row mt-2" id="ingr_container">
+      Ingredients :
+      <button class="col-3 my-auto" type="button" onclick="ajouterIngredient()">Ajouter un ingrédient</button>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-4 text-center">
+          <button type="button" onclick="ajouterRecette()">Ajouter la recette</button>
+          <button id="btnUpdate" style="display : none;" onclick="updateRecette()"">Enregistrer les modifications</button>
+        </div>
+      </div>
+    </form>
+</body>
+<script src="index.js"></script>
+</html>
