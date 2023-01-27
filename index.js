@@ -89,6 +89,7 @@ function ajouterIngredient() {
 
   let quantity = document.createElement("input");
   quantity.type = "number";
+  quantity.min = 0;
   quantity.name = "quantity";
   quantity.id = "quantity" + ingrCount;
   quantity.placeholder = "Quantité";
@@ -97,20 +98,55 @@ function ajouterIngredient() {
   unit.name = "unit";
   unit.id = "unit" + ingrCount;
 
+  let option0 = document.createElement("option");
+  option0.value = "";
+  option0.innerHTML = "";
+  unit.appendChild(option0); 
+
   let option1 = document.createElement("option");
-  option1.value = "grammes";
-  option1.innerHTML = "grammes";
+  option1.value = "mg";
+  option1.innerHTML = "mg";
   unit.appendChild(option1);
 
   let option2 = document.createElement("option");
-  option2.value = "tasses";
-  option2.innerHTML = "tasses";
+  option2.value = "g";
+  option2.innerHTML = "g";
   unit.appendChild(option2);
 
-  let option3 = document.createElement("option");
-  option3.value = "cuillères à soupe";
-  option3.innerHTML = "cuillères à soupe";
-  unit.appendChild(option3);
+  let option4 = document.createElement("option");
+  option4.value = "kg";
+  option4.innerHTML = "kg";
+  unit.appendChild(option4);
+
+  let option5 = document.createElement("option");
+  option5.value = "cl";
+  option5.innerHTML = "cl";
+  unit.appendChild(option5);
+
+  let option6 = document.createElement("option");
+  option6.value = "ml";
+  option6.innerHTML = "ml";
+  unit.appendChild(option6);
+
+  let option7 = document.createElement("option");
+  option7.value = "l";
+  option7.innerHTML = "l";
+  unit.appendChild(option7);
+
+  let option8 = document.createElement("option");
+  option8.value = "c.à.s";
+  option8.innerHTML = "c.à.s";
+  unit.appendChild(option8);
+
+  let option9 = document.createElement("option");
+  option9.value = "c.à.c";
+  option9.innerHTML = "c.à.c";
+  unit.appendChild(option9);
+
+  let option10 = document.createElement("option");
+  option10.value = "sachet";
+  option10.innerHTML = "sachet";
+  unit.appendChild(option10);
 
   ingr.appendChild(unit);
 
@@ -186,11 +222,12 @@ function updateRecette(id) {
       }
     
       // Afficher le bouton Enregistrer les modifications
-      //document.getElementById("btnUpdate").style.display = "block";
       document.querySelector("#btnUpdate").style.display = "block";
+      // Faire disparaitre le bouton Ajouter la recette
+      document.querySelector("#btnCreate").style.display = "none";
 
       // Mise à jour de la recette lorsque le formulaire est soumis
-      let form = document.querySelector("#formUpdateRecette");
+      let form = document.querySelector("#formRecette");
       form.addEventListener("submit", event => {
         event.preventDefault();
         let nomR = document.querySelector("#nomRecette").value;

@@ -104,7 +104,7 @@
         </div>
     </form> -->
 
-    <form class="mt-2" action="http://localhost:3000/receipes" method="post">
+    <form class="mt-2" action="http://localhost:3000/receipes" id="formRecette" method="post">
       <!-- <div class="row mt-2">
       <label for="nomRecette">Nom de la recette :</label>
       <input class="col-3 my-auto" type="text" id="nomRecette" name="nomRecette">
@@ -140,8 +140,8 @@
 
       <div class="row mt-2">
         <div class="col-4 text-center">
-          <button type="button" onclick="ajouterRecette()">Ajouter la recette</button>
-          <button id="btnUpdate" style="display : none;" onclick="updateRecette()"">Enregistrer les modifications</button>
+          <button type="button" id="btnCreate" onclick="ajouterRecette()">Ajouter la recette</button>
+          <button id="btnUpdate" style="display : none;" onclick="updateRecette()">Enregistrer les modifications</button>
         </div>
       </div>
     </form>
