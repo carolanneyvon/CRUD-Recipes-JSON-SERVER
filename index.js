@@ -20,7 +20,6 @@ function init() {
 
 /* READ => Construit le tableau HTML des recettes avec en paramètre le JSON retourné par le serveur
  */
-let btnCount = 0;
 function afficherRecette(res) {
   receipes = res;
   let html = "<table class='table table-bordered table-striped'>";
@@ -49,10 +48,9 @@ function afficherRecette(res) {
       html += ingredient.unit + "</br>";
     }
     html += "</td>";
-    html += "<td><i class='fas fa-lg fa-pen text-warning' id=\"btnModifierRecette" + btnCount + "\" onclick=\"updateRecette('" + receipe.id + "')\"></i></td>";
+    html += "<td><i class='fas fa-lg fa-pen text-warning' onclick=\"modifierRecette('" + receipe.id + "')\"></i></td>";
     html += "<td><i class='fas fa-lg fa-trash text-danger' onclick=\"supprimerRecette('" + receipe.id + "')\"></i></td>";
     html += "</tr>"
-    btnCount++;
   }
   html += "</tbody>";
   html += "</table>";
@@ -207,9 +205,9 @@ function ajouterRecette() {
   callServeur('http://localhost:3000/receipes', objet, 'POST');
 }
 
-/* UPDATE => Permet de mettre à jour une recette en fonction de son id
+/* UPDATE => Permet de récupérer les données de la recette à mettre à jour
 */
-function updateRecette(id) {
+function modifierRecette(id) {
   // Récupération de la recette à mettre à jour
   fetch('http://localhost:3000/receipes/' + id)
     .then(response => response.json())
@@ -232,79 +230,61 @@ function updateRecette(id) {
 
       // Afficher le bouton Enregistrer les modifications
       document.querySelector("#btnUpdate").style.display = "block";
-      // Afficher le bouton Annuler les modifications et action au clic avec cancelUpdate()
-      let cancelButton = document.querySelector("#btnCancel").style.display = "block";
-      cancelButton.onclick = cancelUpdate;
+      // Afficher le bouton Annuler les modifications
+      document.querySelector("#btnCancel").style.display = "block";
       // Faire disparaitre le bouton Ajouter la recette
       document.querySelector("#btnCreate").style.display = "none";
-
-      // Mise à jour de la recette lorsque le formulaire est soumis
-      let form = document.querySelector("#formRecette");
-      form.addEventListener("submit", event => {
-        event.preventDefault();
-        let nomR = document.querySelector("#nomRecette").value;
-        let nb_part = document.querySelector("#nbPart").value;
-        let description = document.querySelector("#description").value;
-        let link = document.querySelector("#link").value;
-        let ingredients = [];
-        // Récupération des valeurs de chaque ingrédient ayant la classe "ingr"
-        let ingrElements = document.querySelectorAll(".ingr");
-        for (let i = 0; i < ingrElements.length; i++) {
-          let nomI = ingrElements[i].querySelector("#nomI" + i).value;
-          let quantity = ingrElements[i].querySelector("#quantity" + i).value;
-          let unit = ingrElements[i].querySelector("#unit" + i).value;
-          ingredients.push({
-            "name": nomI,
-            "quantity": quantity,
-            "unit": unit
-          });
-        }
-        let objet = {
-          "id": id,
-          "name": nomR,
-          "nb_part": nb_part,
-          "description": description,
-          "link": link,
-          "ingredients": ingredients
-        };
-        callServeur('http://localhost:3000/receipes/' + id, objet, 'PUT');
-      });
     });
 }
 
-/* Annuler les modifications et revenir à l'état initial
+/* UPDATE => Permet de mettre à jour une recette en fonction de son id
 */
-// TRAVAIL EN COURS prend quand meme en compte les modification faite dans les champs
-function cancelUpdate() {
-  let originalNomRecette = document.querySelector("#nomRecette").value;
-  let originalNbPart = document.querySelector("#nbPart").value;
-  let originalDescription = document.querySelector("#description").value;
-  let originalLink = document.querySelector("#link").value;
-  let originalIngredients = [];
-
-  // Stockage des ingrédients dans un tableau
+function updateRecette(id) {
+  // Mise à jour de la recette lorsque le formulaire est soumis
+  let nomR = document.querySelector("#nomRecette").value;
+  let nb_part = document.querySelector("#nbPart").value;
+  let description = document.querySelector("#description").value;
+  let link = document.querySelector("#link").value;
+  let ingredients = [];
+  // Récupération des valeurs de chaque ingrédient ayant la classe "ingr"
   let ingrElements = document.querySelectorAll(".ingr");
   for (let i = 0; i < ingrElements.length; i++) {
-    originalIngredients.push({
-      "name": ingrElements[i].querySelector("#nomI" + i).value,
-      "quantity": ingrElements[i].querySelector("#quantity" + i).value,
-      "unit": ingrElements[i].querySelector("#unit" + i).value
+    let nomI = ingrElements[i].querySelector("#nomI" + i).value;
+    let quantity = ingrElements[i].querySelector("#quantity" + i).value;
+    let unit = ingrElements[i].querySelector("#unit" + i).value;
+    ingredients.push({
+      "name": nomI,
+      "quantity": quantity,
+      "unit": unit
     });
   }
+  let objet = {
+    "id": id,
+    "name": nomR,
+    "nb_part": nb_part,
+    "description": description,
+    "link": link,
+    "ingredients": ingredients
+  };
+  callServeur('http://localhost:3000/receipes/' + id, objet, 'PUT');
+}
 
-  // Réaffectation des valeurs originales aux champs de formulaire
-  document.querySelector("#nomRecette").value = originalNomRecette;
-  document.querySelector("#nbPart").value = originalNbPart;
-  document.querySelector("#description").value = originalDescription;
-  document.querySelector("#link").value = originalLink;
-
-  // Réaffectation des ingrédients
+/* UPDATE => Annuler les modifications et revenir à l'état initial
+*/
+function cancelUpdate(id) {
+  document.querySelector("#nomRecette").value = "";
+  document.querySelector("#nbPart").value = "";
+  document.querySelector("#description").value = "";
+  document.querySelector("#link").value = "";
+  // Réinitialisation des ingrédients
+  let ingrElements = document.querySelectorAll(".ingr");
   for (let i = 0; i < ingrElements.length; i++) {
-    ingrElements[i].querySelector("#nomI" + i).value = originalIngredients[i].name;
-    ingrElements[i].querySelector("#quantity" + i).value = originalIngredients[i].quantity;
-    ingrElements[i].querySelector("#unit" + i).value = originalIngredients[i].unit;
+    ingrElements[i].querySelector("#nomI" + i).value = "";
+    ingrElements[i].querySelector("#quantity" + i).value = "";
+    ingrElements[i].querySelector("#unit" + i).value = "";
   }
 }
+
 
 /* DELETE => Permet de supprimer une recette en fonction de son id
 */

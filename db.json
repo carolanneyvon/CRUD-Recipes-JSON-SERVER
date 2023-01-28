@@ -10,17 +10,17 @@
         {
           "name": "Poulet",
           "quantity": "1",
-          "unit": ""
+          "unit": "kg"
         },
         {
           "name": "Coco",
           "quantity": "250",
-          "unit": ""
+          "unit": "ml"
         },
         {
           "name": "Riz",
           "quantity": "1",
-          "unit": ""
+          "unit": "kg"
         }
       ]
     },
