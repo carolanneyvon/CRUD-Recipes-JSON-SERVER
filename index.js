@@ -29,15 +29,15 @@ function afficherRecette(res) {
   html += "<div class='card h-100 shadow-sm border border-dark'>";
   html += "<img src='"+receipe.link+"' class='card-img-top img-fluid'>";
   html += "<div class='card-body d-flex justify-content-around my-3'>";
-  html += "<h5 class='card-title'>"+receipe.name+"</h5>";
-  html += "<span class=''><i class='fa-solid fa-utensils'></i></span>";
+  html += "<h5 class='card-title col'>"+receipe.name+"</h5>";
+  html += "<span class='mx-2'><i class='fa-solid fa-utensils'></i></span>";
   html += "<p class='card-text'>"+receipe.nb_part+"</p>";
   html += "</div>";
-  html += "<div class='card-body>";
+  html += "<div class='card-body'>";
   html += "<p class='card-text'>"+receipe.description+"</p>";
   html += "</div>";
 
-  html += "<div class='card-body>";
+  html += "<div class='card-body'>";
   html += "<h6 class='card-title'>Ingredients</h6>";
   html += "<ul class='list-group list-group-flush'>";
   for(ingredient of receipe.ingredients) {
@@ -47,8 +47,8 @@ function afficherRecette(res) {
   html += "</div>";
 
   html += "<div class='card-footer d-flex justify-content-around'>";
-  html += "<a href='#' class='card-link'>Card link</a>";
-  html += "<span><i class='fas fa-lg fa-pen text-warning' role='button' onclick=\"modifierRecette('" + receipe.id + "')\"></i></span>";
+  html += "<a href='"+receipe.link+"' class='card-link'>Voir la recette</a>";
+  html += "<span><i class='fas fa-lg fa-pen text-warning' role='button' data-bs-toggle='modal' data-bs-target='#newRecipy'  onclick=\"modifierRecette('" + receipe.id + "')\"></i></span>";
   html += "<span><i class='fas fa-lg fa-trash text-danger' role='button' onclick=\"supprimerRecette('" + receipe.id + "')\"></i></span>";
   html += "</div>";
   html += "</div>";
@@ -187,7 +187,6 @@ function ajouterRecette() {
   for (let i = 0; i < ingrElements.length; i++) {
     let nomI = ingrElements[i].querySelector("#nomI" + i).value;
     let quantity = ingrElements[i].querySelector("#quantity" + i).value;
-    //let unit = ingrElements[i].querySelector('input[ name = "unit" ]:checked').value; //btn radio
     let unit = ingrElements[i].querySelector("#unit" + i).value;
     ingredients.push({
       "name": nomI,
@@ -214,7 +213,6 @@ function modifierRecette(id) {
   fetch('http://localhost:3000/receipes/' + id)
     .then(response => response.json())
     .then(recette => {
-      //document.querySelector("#ingr_container").innerHTML = '';
       // Remplissage des champs du formulaire avec les données de la recette
       document.querySelector("#nomRecette").value = recette.name;
       document.querySelector("#nbPart").value = recette.nb_part;
@@ -230,10 +228,10 @@ function modifierRecette(id) {
         document.querySelector("#unit" + i).value = ingredients[i].unit;
       }
 
-      // Afficher le bouton Enregistrer les modifications
-      document.querySelector("#btnUpdate").style.display = "block";
-      // Afficher le bouton Annuler les modifications
-      document.querySelector("#btnCancel").style.display = "block";
+      // Afficher le bouton Enregistrer les modifications   
+     let update_btn = "<button id='btnUpdate' type='button' class='btn btn-primary' onclick=\"updateRecette('" + id + "')\">Enregistrer les modifications</button>";
+     let btn_update = document.querySelector("#btn-update");
+     btn_update.innerHTML = update_btn; 
       // Faire disparaitre le bouton Ajouter la recette
       document.querySelector("#btnCreate").style.display = "none";
     });
@@ -261,7 +259,7 @@ function updateRecette(id) {
     });
   }
   let objet = {
-    "id": id,
+     "id": id,
     "name": nomR,
     "nb_part": nb_part,
     "description": description,
@@ -270,23 +268,6 @@ function updateRecette(id) {
   };
   callServeur('http://localhost:3000/receipes/' + id, objet, 'PUT');
 }
-
-/* UPDATE => Annuler les modifications et revenir à l'état initial
-*/
-function cancelUpdate(id) {
-  document.querySelector("#nomRecette").value = "";
-  document.querySelector("#nbPart").value = "";
-  document.querySelector("#description").value = "";
-  document.querySelector("#link").value = "";
-  // Réinitialisation des ingrédients
-  let ingrElements = document.querySelectorAll(".ingr");
-  for (let i = 0; i < ingrElements.length; i++) {
-    ingrElements[i].querySelector("#nomI" + i).value = "";
-    ingrElements[i].querySelector("#quantity" + i).value = "";
-    ingrElements[i].querySelector("#unit" + i).value = "";
-  }
-}
-
 
 /* DELETE => Permet de supprimer une recette en fonction de son id
 */
@@ -313,11 +294,4 @@ function callServeur(url, objet, method) {
     .then(dataJson => init());
 }
 
-
 document.addEventListener("DOMContentLoaded", init);
-
-/*     fetch('http://localhost:3000/receipes')
-      .then(response => response.json())
-      .then(receipes => console.log(receipes)) */
-
-

@@ -2,6 +2,20 @@ body{
   background: url(/assets/img/bg.jpg) ;
 }
 
+h1{
+  text-transform: uppercase;
+  font-size: 25px;
+  color: red;
+}
+
+.btn-primary{
+  background-color: red;
+  border-color: black;
+}
+.btn-primary:hover{
+  background-color: black;
+}
+
 .bg-light{
   background-color: rgba(18, 18, 18, 0.554)!important;
 }

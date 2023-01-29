@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,68 +10,85 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
     integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
   <title>TP CRUD Receipes</title>
 </head>
 <header class="text-center container">
-<a href="index.html"><img src="/assets/img/logo.png" alt="" height="200" width="200"></a>
+  <a href="index.html"><img src="/assets/img/logo-ck.png" alt="" height="200" width="200"></a>
 </header>
+
 <body>
   <section class="container-fluid my-3">
-    <div class="text-center container">
-    <h1>Recettes de jour</h1>
+    <div class="d-flex justify-content-center container my-2">
+      <h1>Ajouter une recette</h1>
+      <button class="btn btn-primary ms-2" id="btn-add" data-bs-toggle="modal" data-bs-target="#newRecipy">
+        <i class="fa-solid fa-plus"></i>
+      </button>
     </div>
+
+    <!--Modal Ajouter une recette-->
+    <div class="modal fade" id="newRecipy" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Nouvelle Recette</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+
+            <form class="mt-2" action="http://localhost:3000/receipes" id="formRecette">
+              <div class="row mt-2">
+                <div class="col-2 my-auto">
+                  Nom de la recette
+                </div>
+                <div class="col-3 my-auto">
+                  <input type="text" class="form-control" id="nomRecette">
+                </div>
+              </div>
+
+              <div class="row mt-2">
+                <label for="nbPart">Nombre de parts :</label>
+                <input class="col-3 my-auto" type="number" id="nbPart" name="nbPart">
+              </div>
+
+              <div class="row mt-2">
+                <label for="description">Description :</label>
+                <textarea class="col-3 my-auto" id="description" name="description"></textarea>
+              </div>
+
+              <div class="row mt-2">
+                <label for="link">Lien vers la recette :</label>
+                <input class="col-3 my-auto" type="text" id="link" name="link">
+              </div>
+
+              <div class="row mt-2" id="ingr_container">
+                Ingredients :
+                <button class="col-3 my-auto" type="button" onclick="ajouterIngredient()">Ajouter un ingrédient</button>
+              </div>
+            </form>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <span id="btn-update"></span>
+            <button id="btnCreate" type="button" class="btn btn-primary" onclick="ajouterRecette()">Créer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- TABLEAU HTML SE GENERE ICI -->
     <div id="affichage" class="album py-5 bg-light">
     </div>
 
-    <!-- FORMULAIRE -->
-    <form class="mt-2" action="http://localhost:3000/receipes" id="formRecette" method="post">
-      <!-- <div class="row mt-2">
-      <label for="nomRecette">Nom de la recette :</label>
-      <input class="col-3 my-auto" type="text" id="nomRecette" name="nomRecette">
-      </div> -->
-      <div class="row mt-2">
-        <div class="col-2 my-auto">
-            Nom de la recette
-        </div>
-        <div class="col-3 my-auto">
-            <input type="text" class="form-control" id="nomRecette">         
-        </div>
-    </div>
-
-      <div class="row mt-2">
-      <label for="nbPart">Nombre de parts :</label>
-      <input class="col-3 my-auto" type="number" id="nbPart" name="nbPart">
-      </div>
-
-      <div class="row mt-2">
-      <label for="description">Description :</label>
-      <textarea class="col-3 my-auto" id="description" name="description"></textarea>
-      </div>
-
-      <div class="row mt-2">
-      <label for="link">Lien vers la recette :</label>
-      <input class="col-3 my-auto" type="text" id="link" name="link">
-      </div>
-
-      <div class="row mt-2" id="ingr_container">
-      Ingredients :
-      <button class="col-3 my-auto" type="button" onclick="ajouterIngredient()">Ajouter un ingrédient</button>
-      </div>
-
-      <div class="row mt-2">
-        <div class="col-4 text-center">
-          <button type="button" id="btnCreate" onclick="ajouterRecette()">Ajouter la recette</button>
-          <button id="btnUpdate" style="display : none;" onclick="updateRecette()">Enregistrer les modifications</button>
-          <button id="btnCancel" style="display : none;" onclick="cancelUpdate()">Annuler les modifications</button>
-        </div>
-      </div>
-    </form>
-  </section> 
+  </section>
 
 </body>
 <script src="index.js"></script>
+
 </html>
