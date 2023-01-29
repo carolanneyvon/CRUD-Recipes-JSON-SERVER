@@ -29,46 +29,49 @@
       </button>
     </div>
 
+    <!-- TABLEAU HTML SE GENERE ICI -->
+    <div id="affichage" class="album py-5 bg-light">
+    </div>
+
     <!--Modal Ajouter une recette-->
     <div class="modal fade" id="newRecipy" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      aria-labelledby="recetteModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Nouvelle Recette</h1>
+            <h1 class="modal-title fs-5" id="recetteModalLabel">La Recette</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
 
 
             <form class="mt-2" action="http://localhost:3000/receipes" id="formRecette">
-              <div class="row mt-2">
-                <div class="col-2 my-auto">
-                  Nom de la recette
+              <div class="mb-3">
+                <label for="nomRecette" class="col-form-label">Nom de la recette :</label>
+                <input type="text" class="form-control" id="nomRecette">
+              </div>
+
+              <div class="mb-3">
+                <label for="nbPart" class="col-form-label">Nombre de parts :</label>
+                <input type="number" class="form-control" id="nbPart" name="nbPart">
+              </div>
+
+              <div class="mb-3">
+                <label for="description" class="col-form-label">Description :</label>
+                <textarea class="form-control" id="description" name="description"></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label for="link" class="col-form-label">Lien :</label>
+                <input class="form-control" type="text" id="link" name="link">
+              </div>
+
+              <div class="mb-3" id="ingr_container">
+                <div class="mb-3">
+                  <label for="ingredients" class="col-form-label">Ingredients :</label>
+                  <button class="btn btn-dark" type="button" onclick="ajouterIngredient()">Ajouter un
+                    ingrédient</button>
                 </div>
-                <div class="col-3 my-auto">
-                  <input type="text" class="form-control" id="nomRecette">
-                </div>
-              </div>
-
-              <div class="row mt-2">
-                <label for="nbPart">Nombre de parts :</label>
-                <input class="col-3 my-auto" type="number" id="nbPart" name="nbPart">
-              </div>
-
-              <div class="row mt-2">
-                <label for="description">Description :</label>
-                <textarea class="col-3 my-auto" id="description" name="description"></textarea>
-              </div>
-
-              <div class="row mt-2">
-                <label for="link">Lien vers la recette :</label>
-                <input class="col-3 my-auto" type="text" id="link" name="link">
-              </div>
-
-              <div class="row mt-2" id="ingr_container">
-                Ingredients :
-                <button class="col-3 my-auto" type="button" onclick="ajouterIngredient()">Ajouter un ingrédient</button>
               </div>
             </form>
 
@@ -76,14 +79,10 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
             <span id="btn-update"></span>
-            <button id="btnCreate" type="button" class="btn btn-primary" onclick="ajouterRecette()">Créer</button>
+            <button id="btnCreate" type="button" class="btn btn-success" onclick="ajouterRecette()">Créer</button>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- TABLEAU HTML SE GENERE ICI -->
-    <div id="affichage" class="album py-5 bg-light">
     </div>
 
   </section>

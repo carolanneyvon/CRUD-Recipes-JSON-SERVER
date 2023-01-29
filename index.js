@@ -25,38 +25,40 @@ function afficherRecette(res) {
   let html = "<div class='container'>";
   html += "<div class='row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3'>";
   for (receipe of receipes) {
-  html += "<div class='col'>";
-  html += "<div class='card h-100 shadow-sm border border-dark'>";
-  html += "<img src='"+receipe.link+"' class='card-img-top img-fluid'>";
-  html += "<div class='card-body d-flex justify-content-around my-3'>";
-  html += "<h5 class='card-title col'>"+receipe.name+"</h5>";
-  html += "<span class='mx-2'><i class='fa-solid fa-utensils'></i></span>";
-  html += "<p class='card-text'>"+receipe.nb_part+"</p>";
-  html += "</div>";
-  html += "<div class='card-body'>";
-  html += "<p class='card-text'>"+receipe.description+"</p>";
-  html += "</div>";
+    html += "<div class='col'>";
+    html += "<div class='card h-100 shadow-sm border border-dark'>";
+    html += "<img src='/assets/img/poulet-coco.jpg' class='card-img-top img-fluid'>";
+    // A AMELIORER => pouvoir télécharger une image dans le form
+    //html += "<img src='"+receipe.img+"' class='card-img-top img-fluid'>";
+    html += "<div class='card-body d-flex justify-content-around my-3'>";
+    html += "<h5 class='card-title col'>" + receipe.name + "</h5>";
+    html += "<span class='mx-2'><i class='fa-solid fa-utensils'></i></span>";
+    html += "<p class='card-text'>" + receipe.nb_part + "</p>";
+    html += "</div>";
+    html += "<div class='card-body'>";
+    html += "<p class='card-text'>" + receipe.description + "</p>";
+    html += "</div>";
 
-  html += "<div class='card-body'>";
-  html += "<h6 class='card-title'>Ingredients</h6>";
-  html += "<ul class='list-group list-group-flush'>";
-  for(ingredient of receipe.ingredients) {
-    html += "<li class='list-group-item'>"+ingredient.name+ " : "+ingredient.quantity+ingredient.unit+"</li>";
+    html += "<div class='card-body'>";
+    html += "<h6 class='card-title'>Ingredients</h6>";
+    html += "<ul class='list-group list-group-flush'>";
+    for (ingredient of receipe.ingredients) {
+      html += "<li class='list-group-item'>" + ingredient.name + " : " + ingredient.quantity + ingredient.unit + "</li>";
+    }
+    html += "</ul>";
+    html += "</div>";
+
+    html += "<div class='card-footer d-flex justify-content-around'>";
+    html += "<a href='" + receipe.link + "' class='card-link'><i class='fa-solid fa-link text-primary'></i></a>";
+    html += "<span><i class='fas fa-lg fa-pen text-warning' role='button' data-bs-toggle='modal' data-bs-target='#newRecipy'  onclick=\"modifierRecette('" + receipe.id + "')\"></i></span>";
+    html += "<span><i class='fas fa-lg fa-trash text-danger' role='button' onclick=\"supprimerRecette('" + receipe.id + "')\"></i></span>";
+    html += "</div>";
+    html += "</div>";
+    html += "</div>";
   }
-  html += "</ul>";
-  html += "</div>";
-
-  html += "<div class='card-footer d-flex justify-content-around'>";
-  html += "<a href='"+receipe.link+"' class='card-link'>Voir la recette</a>";
-  html += "<span><i class='fas fa-lg fa-pen text-warning' role='button' data-bs-toggle='modal' data-bs-target='#newRecipy'  onclick=\"modifierRecette('" + receipe.id + "')\"></i></span>";
-  html += "<span><i class='fas fa-lg fa-trash text-danger' role='button' onclick=\"supprimerRecette('" + receipe.id + "')\"></i></span>";
   html += "</div>";
   html += "</div>";
   html += "</div>";
-}
-html += "</div>";
-html += "</div>";
-html += "</div>";
   let affichage = document.querySelector("#affichage");
   affichage.innerHTML = html;
 }
@@ -78,14 +80,23 @@ function generate_UUID() {
 let ingrCount = 0;
 function ajouterIngredient() {
   let container = document.querySelector("#ingr_container");
+  let parentDiv = document.createElement("div");
+  parentDiv.classList.add("parentDiv");
+
   let ingr = document.createElement("div");
   ingr.classList.add("ingr");
+  ingr.classList.add("mb-3");
+  ingr.classList.add("row");
 
   let nomI = document.createElement("input");
   nomI.type = "text";
   nomI.name = "nomI";
   nomI.id = "nomI" + ingrCount;
-  nomI.placeholder = "Nom de l'ingrédient";
+  nomI.classList = "form-control";
+  nomI.placeholder = "Nom";
+  let divNomI = document.createElement("div");
+  divNomI.classList.add("col");
+  divNomI.appendChild(nomI);
 
   let quantity = document.createElement("input");
   quantity.type = "number";
@@ -93,7 +104,11 @@ function ajouterIngredient() {
   quantity.max = 999;
   quantity.name = "quantity";
   quantity.id = "quantity" + ingrCount;
-  quantity.placeholder = "Quantité";
+  quantity.classList = "form-control";
+  quantity.placeholder = "Qte";
+  let divQuantity = document.createElement("div");
+  divQuantity.classList.add("col");
+  divQuantity.appendChild(quantity);
 
   // Ne vérouille pas la saisie mais informe l'utilisateur qu'il doit renseigner un chiffre entre 0 et 999
   quantity.addEventListener("input", function (event) {
@@ -106,6 +121,10 @@ function ajouterIngredient() {
   let unit = document.createElement("select");
   unit.name = "unit";
   unit.id = "unit" + ingrCount;
+  unit.classList = "form-control";
+  let divUnit = document.createElement("div");
+  divUnit.classList.add("col");
+  divUnit.appendChild(unit);
 
   let option0 = document.createElement("option");
   option0.value = "";
@@ -157,19 +176,22 @@ function ajouterIngredient() {
   option10.innerHTML = "sachet";
   unit.appendChild(option10);
 
-  ingr.appendChild(unit);
-
   let button = document.createElement("button");
   button.innerHTML = "Supprimer";
   button.onclick = function () {
     ingr.remove();
   }
+  button.classList = "btn btn-danger";
+  let divButton = document.createElement("div");
+  divButton.classList.add("col");
+  divButton.appendChild(button);
 
-  ingr.appendChild(nomI);
-  ingr.appendChild(quantity);
-  ingr.appendChild(unit);
-  ingr.appendChild(button);
-  container.appendChild(ingr);
+  ingr.appendChild(divNomI);
+  ingr.appendChild(divQuantity);
+  ingr.appendChild(divUnit);
+  ingr.appendChild(divButton);
+  parentDiv.appendChild(ingr);
+  container.appendChild(parentDiv);
   ingrCount++;
 }
 
@@ -229,9 +251,9 @@ function modifierRecette(id) {
       }
 
       // Afficher le bouton Enregistrer les modifications   
-     let update_btn = "<button id='btnUpdate' type='button' class='btn btn-primary' onclick=\"updateRecette('" + id + "')\">Enregistrer les modifications</button>";
-     let btn_update = document.querySelector("#btn-update");
-     btn_update.innerHTML = update_btn; 
+      let update_btn = "<button id='btnUpdate' type='button' class='btn btn-primary' onclick=\"updateRecette('" + id + "')\">Enregistrer les modifications</button>";
+      let btn_update = document.querySelector("#btn-update");
+      btn_update.innerHTML = update_btn;
       // Faire disparaitre le bouton Ajouter la recette
       document.querySelector("#btnCreate").style.display = "none";
     });
@@ -259,7 +281,7 @@ function updateRecette(id) {
     });
   }
   let objet = {
-     "id": id,
+    "id": id,
     "name": nomR,
     "nb_part": nb_part,
     "description": description,
