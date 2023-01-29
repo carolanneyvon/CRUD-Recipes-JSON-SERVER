@@ -22,39 +22,41 @@ function init() {
  */
 function afficherRecette(res) {
   receipes = res;
-  let html = "<table class='table table-bordered table-striped'>";
-  html += "<thead class='table-primary'>";
-  html += "<tr>";
-  html += "<th>Nom</th>";
-  html += "<th>Nombre de parts</th>";
-  html += "<th>Description</th>";
-  html += "<th>Lien</th>";
-  html += "<th>Ingredients</th>";
-  html += "<th>Modifier</th>";
-  html += "<th>Supprimer</th>";
-  html += "</tr>";
-  html += "</thead>";
-  html += "<tbody>";
+  let html = "<div class='container'>";
+  html += "<div class='row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3'>";
   for (receipe of receipes) {
-    html += "<tr>";
-    html += "<td>" + receipe.name + "</td>";
-    html += "<td>" + receipe.nb_part + "</td>";
-    html += "<td>" + receipe.description + "</td>";
-    html += "<td>" + receipe.link + "</td>";
-    html += "<td>";
-    for (ingredient of receipe.ingredients) {
-      html += ingredient.name + " : ";
-      html += ingredient.quantity;
-      html += ingredient.unit + "</br>";
-    }
-    html += "</td>";
-    html += "<td><i class='fas fa-lg fa-pen text-warning' onclick=\"modifierRecette('" + receipe.id + "')\"></i></td>";
-    html += "<td><i class='fas fa-lg fa-trash text-danger' onclick=\"supprimerRecette('" + receipe.id + "')\"></i></td>";
-    html += "</tr>"
-  }
-  html += "</tbody>";
-  html += "</table>";
+  html += "<div class='col'>";
+  html += "<div class='card h-100 shadow-sm border border-dark'>";
+  html += "<img src='"+receipe.link+"' class='card-img-top img-fluid'>";
+  html += "<div class='card-body d-flex justify-content-around my-3'>";
+  html += "<h5 class='card-title'>"+receipe.name+"</h5>";
+  html += "<span class=''><i class='fa-solid fa-utensils'></i></span>";
+  html += "<p class='card-text'>"+receipe.nb_part+"</p>";
+  html += "</div>";
+  html += "<div class='card-body>";
+  html += "<p class='card-text'>"+receipe.description+"</p>";
+  html += "</div>";
 
+  html += "<div class='card-body>";
+  html += "<h6 class='card-title'>Ingredients</h6>";
+  html += "<ul class='list-group list-group-flush'>";
+  for(ingredient of receipe.ingredients) {
+    html += "<li class='list-group-item'>"+ingredient.name+ " : "+ingredient.quantity+ingredient.unit+"</li>";
+  }
+  html += "</ul>";
+  html += "</div>";
+
+  html += "<div class='card-footer d-flex justify-content-around'>";
+  html += "<a href='#' class='card-link'>Card link</a>";
+  html += "<span><i class='fas fa-lg fa-pen text-warning' role='button' onclick=\"modifierRecette('" + receipe.id + "')\"></i></span>";
+  html += "<span><i class='fas fa-lg fa-trash text-danger' role='button' onclick=\"supprimerRecette('" + receipe.id + "')\"></i></span>";
+  html += "</div>";
+  html += "</div>";
+  html += "</div>";
+}
+html += "</div>";
+html += "</div>";
+html += "</div>";
   let affichage = document.querySelector("#affichage");
   affichage.innerHTML = html;
 }

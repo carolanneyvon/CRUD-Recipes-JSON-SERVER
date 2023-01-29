@@ -5,7 +5,7 @@
       "name": "Poulet coco",
       "nb_part": "4",
       "description": "Poulet au lait de coco sur son lit de riz.",
-      "link": "htpps//www.youtube.com",
+      "link": "/assets/img/poulet-coco.jpg",
       "ingredients": [
         {
           "name": "Poulet",
@@ -29,7 +29,7 @@
       "name": "Poulet gingembre",
       "nb_part": "4",
       "description": "Poulet au gingembre sur son lit de riz.",
-      "link": "htpps//www.youtube.com",
+      "link": "/assets/img/poulet-gingembre.jpg",
       "ingredients": [
         {
           "name": "Poulet",
