@@ -2,7 +2,7 @@
 
 ## Création d'un système interactif de recettes de cuisine
 
-**La mission : **
+**La mission :**
 Vous devez créer un CRUD ( Create Read Update Delete) qui permette de gérer des recettes de cuisine. Le Back end est géré par json-server. Vous devez créer la partie front de l'application : le HTML CSS JS. Vous êtes libre d'utiliser un framework CSS ou pas. Vous pouvez utiliser par exemple Bootstrap ou TailwindCSS.  
 
 En revanche, vous ne pouvez utiliser uniquement du Vanilla JS (pas de framework JS).
